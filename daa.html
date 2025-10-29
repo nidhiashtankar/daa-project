@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>India Cities MST Visualizer</title>
+    <link rel="stylesheet" href="daa.css">
+</head>
+<body>
+    <div class="container">
+        <h1>India City Connector</h1>
+        <p class="subtitle">Compare Prim's and Kruskal's Algorithm</p>
+
+        <div class="input-section">
+            <h2>Add City Connection</h2>
+            <div class="input-group">
+                <input type="text" id="city1" placeholder="City 1 (e.g., Mumbai)">
+                <input type="text" id="city2" placeholder="City 2 (e.g., Delhi)">
+                <input type="number" id="distance" placeholder="Distance (km)" min="1">
+                <button onclick="addEdge()">Add Connection</button>
+            </div>
+            <button onclick="loadSampleData()" class="sample-btn">Load Sample Indian Cities</button>
+        </div>
+
+        <div class="edges-list">
+            <h3>Current Connections</h3>
+            <div id="edgesList"></div>
+        </div>
+
+        <div class="action-buttons">
+            <button onclick="calculateMST()" class="calculate-btn">Calculate MST</button>
+            <button onclick="resetData()" class="reset-btn">Reset All</button>
+        </div>
+
+        <div class="results" id="results" style="display: none;">
+            <div class="algorithm-result">
+                <h2>Prim's Algorithm</h2>
+                <div class="stats">
+                    <p><strong>Total Cost:</strong> <span id="primCost"></span> km</p>
+                    <p><strong>Edges Used:</strong> <span id="primEdges"></span></p>
+                </div>
+                <div class="connections">
+                    <h3>Connections:</h3>
+                    <ul id="primList"></ul>
+                </div>
+                <canvas id="primCanvas"></canvas>
+            </div>
+
+            <div class="algorithm-result">
+                <h2>Kruskal's Algorithm</h2>
+                <div class="stats">
+                    <p><strong>Total Cost:</strong> <span id="kruskalCost"></span> km</p>
+                    <p><strong>Edges Used:</strong> <span id="kruskalEdges"></span></p>
+                </div>
+                <div class="connections">
+                    <h3>Connections:</h3>
+                    <ul id="kruskalList"></ul>
+                </div>
+                <canvas id="kruskalCanvas"></canvas>
+            </div>
+        </div>
+
+        <div class="comparison" id="comparison" style="display: none;">
+            <h2>Comparison</h2>
+            <div class="comparison-grid">
+                <div class="comparison-item">
+                    <h3>Prim's Algorithm</h3>
+                    <p><strong>Total Cost:</strong> <span id="primCostComp"></span> km</p>
+                    <p><strong>Edges:</strong> <span id="primEdgesComp"></span></p>
+                </div>
+                <div class="comparison-item">
+                    <h3>Kruskal's Algorithm</h3>
+                    <p><strong>Total Cost:</strong> <span id="kruskalCostComp"></span> km</p>
+                    <p><strong>Edges:</strong> <span id="kruskalEdgesComp"></span></p>
+                </div>
+            </div>
+            <p id="comparisonResult"></p>
+        </div>
+    </div>
+
+    <script src="daa.js"></script>
+</body>
+</html>

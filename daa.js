@@ -1,8 +1,8 @@
-// Global variables
+
 let edges = [];
 let vertices = new Set();
 
-// Add edge function
+// edge function
 function addEdge() {
     const city1 = document.getElementById('city1').value.trim();
     const city2 = document.getElementById('city2').value.trim();
@@ -26,7 +26,7 @@ function addEdge() {
     clearInputs();
 }
 
-// Clear input fields
+//  input fields
 function clearInputs() {
     document.getElementById('city1').value = '';
     document.getElementById('city2').value = '';
@@ -65,7 +65,7 @@ function rebuildVertices() {
     });
 }
 
-// Load sample data
+//  sample data
 function loadSampleData() {
     edges = [
         { city1: 'Mumbai', city2: 'Pune', weight: 150 },
@@ -138,7 +138,7 @@ function primMST() {
     return { mst, cost: totalCost };
 }
 
-// Kruskal's Algorithm - Union Find
+// Kruskal's Algorithm 
 class UnionFind {
     constructor(vertices) {
         this.parent = {};
@@ -227,7 +227,7 @@ function displayResults(algorithm, result) {
     drawGraph(algorithm, result.mst);
 }
 
-// Draw graph on canvas
+// graph 
 function drawGraph(algorithm, mst) {
     const canvas = document.getElementById(`${algorithm}Canvas`);
     const ctx = canvas.getContext('2d');
@@ -237,7 +237,7 @@ function drawGraph(algorithm, mst) {
     
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Position vertices in circle
+    //  vertices in circle
     const vertexArray = Array.from(vertices);
     const positions = {};
     const centerX = canvas.width / 2;
@@ -252,7 +252,7 @@ function drawGraph(algorithm, mst) {
         };
     });
 
-    // Draw edges
+    // edges
     ctx.strokeStyle = '#28a745';
     ctx.lineWidth = 2;
     mst.forEach(edge => {
@@ -264,7 +264,7 @@ function drawGraph(algorithm, mst) {
         ctx.lineTo(pos2.x, pos2.y);
         ctx.stroke();
 
-        // Draw weight
+        // weight
         const midX = (pos1.x + pos2.x) / 2;
         const midY = (pos1.y + pos2.y) / 2;
         ctx.fillStyle = 'white';
@@ -275,7 +275,7 @@ function drawGraph(algorithm, mst) {
         ctx.fillText(edge.weight, midX, midY + 4);
     });
 
-    // Draw vertices
+    //  vertices
     vertexArray.forEach(vertex => {
         const pos = positions[vertex];
         ctx.fillStyle = '#667eea';
@@ -307,4 +307,5 @@ function displayComparison(primResult, kruskalResult) {
         compResult.innerHTML = `Different results `;
         compResult.style.color = '#ab696fff';
     }
+
 }

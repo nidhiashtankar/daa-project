@@ -1,8 +1,8 @@
-
+// Global variables
 let edges = [];
 let vertices = new Set();
 
-// edge function
+// Add edge function
 function addEdge() {
     const city1 = document.getElementById('city1').value.trim();
     const city2 = document.getElementById('city2').value.trim();
@@ -26,7 +26,7 @@ function addEdge() {
     clearInputs();
 }
 
-//  input fields
+// Clear input fields
 function clearInputs() {
     document.getElementById('city1').value = '';
     document.getElementById('city2').value = '';
@@ -65,7 +65,7 @@ function rebuildVertices() {
     });
 }
 
-//  sample data
+// Load sample data
 function loadSampleData() {
     edges = [
         { city1: 'Mumbai', city2: 'Pune', weight: 150 },
@@ -138,7 +138,7 @@ function primMST() {
     return { mst, cost: totalCost };
 }
 
-// Kruskal's Algorithm 
+// Kruskal's Algorithm - Union Find
 class UnionFind {
     constructor(vertices) {
         this.parent = {};
@@ -227,7 +227,7 @@ function displayResults(algorithm, result) {
     drawGraph(algorithm, result.mst);
 }
 
-// graph 
+// Draw graph on canvas
 function drawGraph(algorithm, mst) {
     const canvas = document.getElementById(`${algorithm}Canvas`);
     const ctx = canvas.getContext('2d');
@@ -237,7 +237,7 @@ function drawGraph(algorithm, mst) {
     
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    //  vertices in circle
+    // Position vertices in circle
     const vertexArray = Array.from(vertices);
     const positions = {};
     const centerX = canvas.width / 2;
@@ -252,7 +252,7 @@ function drawGraph(algorithm, mst) {
         };
     });
 
-    // edges
+    // Draw edges
     ctx.strokeStyle = '#28a745';
     ctx.lineWidth = 2;
     mst.forEach(edge => {
@@ -264,7 +264,7 @@ function drawGraph(algorithm, mst) {
         ctx.lineTo(pos2.x, pos2.y);
         ctx.stroke();
 
-        // weight
+        // Draw weight
         const midX = (pos1.x + pos2.x) / 2;
         const midY = (pos1.y + pos2.y) / 2;
         ctx.fillStyle = 'white';
@@ -275,7 +275,7 @@ function drawGraph(algorithm, mst) {
         ctx.fillText(edge.weight, midX, midY + 4);
     });
 
-    //  vertices
+    // Draw vertices
     vertexArray.forEach(vertex => {
         const pos = positions[vertex];
         ctx.fillStyle = '#667eea';
@@ -301,11 +301,10 @@ function displayComparison(primResult, kruskalResult) {
     const compResult = document.getElementById('comparisonResult');
     
     if (primResult.cost === kruskalResult.cost) {
-        compResult.innerHTML = ` Both algorithms produced identical minimum spanning trees with total cost of <strong>${primResult.cost} km</strong>`;
+        compResult.innerHTML = ` Both algorithms produced identical minimum spanning trees with total cost of <strong>${primResult.cost} </strong>`;
         compResult.style.color = '#28a745';
     } else {
         compResult.innerHTML = `Different results `;
         compResult.style.color = '#ab696fff';
     }
-
 }

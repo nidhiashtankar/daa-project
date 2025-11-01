@@ -3,78 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>India Cities MST Visualizer</title>
+    <title>Delivery System</title>
     <link rel="stylesheet" href="daa.css">
 </head>
 <body>
     <div class="container">
-        <h1>India City Connector</h1>
-        <p class="subtitle">Compare Prim's and Kruskal's Algorithm</p>
+        <header>
+            <h1>Delivery System</h1>
+            <p class="subtitle">Knapsack - TSP - All pair shortest path Algorithm</p>
+        </header>
 
-        <div class="input-section">
-            <h2>Add City Connection</h2>
-            <div class="input-group">
-                <input type="text" id="city1" placeholder="City 1 (e.g., Mumbai)">
-                <input type="text" id="city2" placeholder="City 2 (e.g., Delhi)">
-                <input type="number" id="distance" placeholder="Distance (km)" min="1">
-                <button onclick="addEdge()">Add Connection</button>
+        <div class="main-content">
+            <div class="section">
+                <h2>Add Products</h2>
+                <div class="input-group">
+                    <label>Product Name</label>
+                    <input type="text" id="productName" placeholder="Enter product name">
+                </div>
+                <div class="input-group">
+                    <label>Weight (kg)</label>
+                    <input type="number" id="productWeight" placeholder="Enter weight" min="0.1" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label>Quantity</label>
+                    <input type="number" id="productValue" placeholder="Enter quantity" min="1">
+                </div>
+                <div class="input-group">
+                    <label>Destination</label>
+                    <input type="text" id="productDestination" placeholder="e.g., Location A">
+                </div>
+                <button onclick="addProduct()">Add Product</button>
+                
+                <div class="products-list" id="productsList"></div>
             </div>
-            <button onclick="loadSampleData()" class="sample-btn">Load Sample Indian Cities</button>
-        </div>
 
-        <div class="edges-list">
-            <h3>Current Connections</h3>
-            <div id="edgesList"></div>
-        </div>
+            <div class="section">
+                <h2>Truck Configuration</h2>
+                <div class="input-group">
+                    <label>Truck Capacity (kg)</label>
+                    <input type="number" id="truckCapacity" value="100" min="1">
+                </div>
 
-        <div class="action-buttons">
-            <button onclick="calculateMST()" class="calculate-btn">Calculate MST</button>
-            <button onclick="resetData()" class="reset-btn">Reset All</button>
-        </div>
+                <h2 style="margin-top: 30px;">Delivery Network</h2>
+                <div class="input-group">
+                    <label>From Location</label>
+                    <input type="text" id="fromLocation" placeholder="Location A">
+                </div>
+                <div class="input-group">
+                    <label>To Location</label>
+                    <input type="text" id="toLocation" placeholder="Location B">
+                </div>
+                <div class="input-group">
+                    <label>Distance (km)</label>
+                    <input type="number" id="distance" placeholder="Enter distance" min="0.1" step="0.1">
+                </div>
+                <button onclick="addRoute()">Add Route</button>
 
-        <div class="results" id="results" style="display: none;">
-            <div class="algorithm-result">
-                <h2>Prim's Algorithm</h2>
+                <div class="locations-grid" id="locationsList"></div>
+
+                <div class="btn-group">
+                    <button onclick="optimizeDelivery()" class="btn-optimize">Optimize Delivery</button>
+                    <button onclick="reset()" class="btn-reset">Reset</button>
+                </div>
+            </div>
+
+            <div class="results" id="results" style="display: none;">
+                <h2 class="results-title">Optimization Results</h2>
+                
                 <div class="stats">
-                    <p><strong>Total Cost:</strong> <span id="primCost"></span> </p>
-                    <p><strong>Edges Used:</strong> <span id="primEdges"></span></p>
+                    <div class="stat-box">
+                        <div class="stat-value" id="statItems">0</div>
+                        <div class="stat-label">Items Loaded</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="statWeight">0kg</div>
+                        <div class="stat-label">Total Weight</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="statValue">0</div>
+                        <div class="stat-label">Total Quantity</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="statDistance">0km</div>
+                        <div class="stat-label">Total Distance</div>
+                    </div>
                 </div>
-                <div class="connections">
-                    <h3>Connections:</h3>
-                    <ul id="primList"></ul>
-                </div>
-                <canvas id="primCanvas"></canvas>
-            </div>
 
-            <div class="algorithm-result">
-                <h2>Kruskal's Algorithm</h2>
-                <div class="stats">
-                    <p><strong>Total Cost:</strong> <span id="kruskalCost"></span> </p>
-                    <p><strong>Edges Used:</strong> <span id="kruskalEdges"></span></p>
+                <div class="algorithm-step">
+                    <h3> Knapsack Algorithm - Truck is Loaded</h3>
+                    <div class="loaded-items" id="loadedItems"></div>
                 </div>
-                <div class="connections">
-                    <h3>Connections:</h3>
-                    <ul id="kruskalList"></ul>
-                </div>
-                <canvas id="kruskalCanvas"></canvas>
-            </div>
-        </div>
 
-        <div class="comparison" id="comparison" style="display: none;">
-            <h2>Comparison</h2>
-            <div class="comparison-grid">
-                <div class="comparison-item">
-                    <h3>Prim's Algorithm</h3>
-                    <p><strong>Total Cost:</strong> <span id="primCostComp"></span> </p>
-                    <p><strong>Edges:</strong> <span id="primEdgesComp"></span></p>
+                <div class="algorithm-step">
+                    <h3> Algorithm-TSP</h3>
+                    <div class="route-path" id="routePath"></div>
+                    <p><strong>Total Distance:</strong> <span id="routeDistance">0</span> km</p>
                 </div>
-                <div class="comparison-item">
-                    <h3>Kruskal's Algorithm</h3>
-                    <p><strong>Total Cost:</strong> <span id="kruskalCostComp"></span> </p>
-                    <p><strong>Edges:</strong> <span id="kruskalEdgesComp"></span></p>
+
+                <div class="algorithm-step">
+                    <h3> All Pairs Shortest Path</h3>
+                    <div class="distance-matrix">
+                        <table id="distanceTable"></table>
+                    </div>
                 </div>
             </div>
-            <p id="comparisonResult"></p>
         </div>
     </div>
 
